@@ -1,0 +1,14 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: vault-database
+spec:
+  # https://developer.hashicorp.com/vault/docs/platform/k8s/csi/configurations 
+  provider: vault
+  parameters:
+    vaultAddress: "https://vault-internal.vault.svc.cluster.local:8200"
+    vaultSkipTLSVerify: "true"
+    roleName: "database"
+    objects: |
+      - objectName: "db-password"
+        secretPath: "secret/data/"
